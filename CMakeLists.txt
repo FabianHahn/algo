@@ -13,5 +13,10 @@ target_link_libraries(valid_sudoku GTest::gtest GTest::gmock)
 set_property(TARGET valid_sudoku PROPERTY CXX_STANDARD 17)
 add_test(valid_sudoku valid_sudoku)
 
+add_executable(3sum "3sum.cpp")
+target_link_libraries(3sum GTest::gtest GTest::gmock)
+set_property(TARGET 3sum PROPERTY CXX_STANDARD 17)
+add_test(3sum 3sum)
+
 add_subdirectory(thirdparty)
 
