@@ -193,7 +193,6 @@ double findMedianSortedArrays2(const std::vector<int>& numsA, const std::vector<
 
   if (currentSizeA == 1) {
     std::size_t x = findFirstElementLargerEqualThan(numsB, numsA[currentMinA]);
-    auto 
 
     if (isAverageB) {
 
@@ -211,7 +210,9 @@ double findMedianSortedArrays2(const std::vector<int>& numsA, const std::vector<
     } else {
       if (x < currentHalfSizeB) {
         return 0.5 * (numsB[currentHalfSizeB] + numsB[currentHalfSizeB - 1]);
-      } else if (x == currentHalfSizeB)
+      } else if (x == currentHalfSizeB) {
+
+      }
     }
   } else {
     if (isAverageA == 0) {
@@ -225,6 +226,8 @@ double findMedianSortedArrays2(const std::vector<int>& numsA, const std::vector<
       }
     }
   }
+
+  return 0.0;
 }
 
 TEST(Leetcode4, bisect) {
