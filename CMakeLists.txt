@@ -18,5 +18,10 @@ target_link_libraries(3sum GTest::gtest GTest::gmock)
 set_property(TARGET 3sum PROPERTY CXX_STANDARD 17)
 add_test(3sum 3sum)
 
+add_executable(2sum "2sum.cpp")
+target_link_libraries(2sum GTest::gtest GTest::gmock)
+set_property(TARGET 2sum PROPERTY CXX_STANDARD 17)
+add_test(2sum 2sum)
+
 add_subdirectory(thirdparty)
 
