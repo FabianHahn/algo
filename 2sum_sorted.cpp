@@ -47,6 +47,28 @@ std::vector<int> twoSum(const std::vector<int>& numbers, int target) {
   return {};
 }
 
+std::vector<int> twoSum2(const std::vector<int>& numbers, int target) {
+  std::size_t lo = 0;
+  std::size_t hi = numbers.size() - 1;
+  while (lo < hi) {
+    int a = numbers[lo];
+    int b = numbers[hi];
+    assert(b >= a);
+    if (a + b == target) {
+      return std::vector<int>{(int) lo + 1, (int) hi + 1};
+    }
+
+    int aNeed = target - a;
+    if (aNeed < b) {
+      hi--;
+    } else {
+      lo++;
+    }
+  }
+
+  return {};
+}
+
 TEST(TwoSum, sorted) {
   EXPECT_THAT(twoSum(std::vector<int>{2, 7, 11, 15}, 9), ElementsAre(1, 2));
   EXPECT_THAT(twoSum(std::vector<int>{2, 3, 4}, 6), ElementsAre(1, 3));
@@ -54,6 +76,15 @@ TEST(TwoSum, sorted) {
   EXPECT_THAT(twoSum(std::vector<int>{1, 2, 4, 6, 7, 10}, 9), ElementsAre(2, 5));
   EXPECT_THAT(twoSum(std::vector<int>{0, 0, 3, 4}, 0), ElementsAre(1, 2));
   EXPECT_THAT(twoSum(std::vector<int>{1, 2, 3, 4, 4, 9, 56, 90}, 8), ElementsAre(4, 5));
+}
+
+TEST(TwoSum, sorted2) {
+  EXPECT_THAT(twoSum2(std::vector<int>{2, 7, 11, 15}, 9), ElementsAre(1, 2));
+  EXPECT_THAT(twoSum2(std::vector<int>{2, 3, 4}, 6), ElementsAre(1, 3));
+  EXPECT_THAT(twoSum2(std::vector<int>{-1, 0}, -1), ElementsAre(1, 2));
+  EXPECT_THAT(twoSum2(std::vector<int>{1, 2, 4, 6, 7, 10}, 9), ElementsAre(2, 5));
+  EXPECT_THAT(twoSum2(std::vector<int>{0, 0, 3, 4}, 0), ElementsAre(1, 2));
+  EXPECT_THAT(twoSum2(std::vector<int>{1, 2, 3, 4, 4, 9, 56, 90}, 8), ElementsAre(4, 5));
 }
 
 int main(int argc, char** argv) {
