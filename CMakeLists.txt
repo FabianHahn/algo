@@ -23,5 +23,10 @@ target_link_libraries(2sum GTest::gtest GTest::gmock)
 set_property(TARGET 2sum PROPERTY CXX_STANDARD 17)
 add_test(2sum 2sum)
 
+add_executable(2sum_sorted "2sum_sorted.cpp")
+target_link_libraries(2sum_sorted GTest::gtest GTest::gmock)
+set_property(TARGET 2sum_sorted PROPERTY CXX_STANDARD 17)
+add_test(2sum_sorted 2sum_sorted)
+
 add_subdirectory(thirdparty)
 
