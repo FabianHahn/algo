@@ -8,7 +8,7 @@
 using ::testing::IsEmpty;
 using ::testing::UnorderedElementsAre;
 
-std::vector<std::vector<int>> threeSum(std::vector<int>& nums) {
+std::vector<std::vector<int>> threeSumOld(std::vector<int>& nums) {
   std::unordered_multiset<int> numbers;
   numbers.insert(nums.begin(), nums.end());
 
@@ -57,6 +57,44 @@ std::vector<std::vector<int>> threeSum(std::vector<int>& nums) {
   }
 
   return result;
+}
+
+std::vector<std::vector<int>> threeSum(std::vector<int>& numbers) {
+  std::sort(numbers.begin(), numbers.end());
+  std::vector<std::vector<int>> triplets;
+
+  for (std::size_t i = 0; i < numbers.size();) {
+    int target = -numbers[i];
+    std::size_t lo = i + 1;
+    std::size_t hi = numbers.size() - 1;
+    while (lo < hi) {
+      int a = numbers[lo];
+      int b = numbers[hi];
+      assert(b >= a);
+      if (a + b == target) {
+        triplets.emplace_back(std::vector<int>{numbers[i], a, b});
+        hi--;
+        while (hi > 0 && lo < hi && numbers[hi] == b) {
+          hi--;
+        }
+        continue;
+      }
+
+      int aNeed = target - a;
+      if (aNeed < b) {
+        hi--;
+      } else {
+        lo++;
+      }
+    }
+
+    i++;
+    while (i < numbers.size() && numbers[i] == -target) {
+      i++;
+    }
+  }
+
+  return triplets;
 }
 
 TEST(ThreeSum, triplets1) {
