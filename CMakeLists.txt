@@ -33,5 +33,10 @@ target_link_libraries(calendar_double_booking GTest::gtest GTest::gmock)
 set_property(TARGET calendar_double_booking PROPERTY CXX_STANDARD 17)
 add_test(calendar_double_booking calendar_double_booking)
 
+add_executable(longest_common_prefix "longest_common_prefix.cpp")
+target_link_libraries(longest_common_prefix GTest::gtest GTest::gmock)
+set_property(TARGET longest_common_prefix PROPERTY CXX_STANDARD 17)
+add_test(longest_common_prefix longest_common_prefix)
+
 add_subdirectory(thirdparty)
 
