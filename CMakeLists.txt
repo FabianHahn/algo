@@ -28,5 +28,10 @@ target_link_libraries(2sum_sorted GTest::gtest GTest::gmock)
 set_property(TARGET 2sum_sorted PROPERTY CXX_STANDARD 17)
 add_test(2sum_sorted 2sum_sorted)
 
+add_executable(calendar_double_booking "calendar_double_booking.cpp")
+target_link_libraries(calendar_double_booking GTest::gtest GTest::gmock)
+set_property(TARGET calendar_double_booking PROPERTY CXX_STANDARD 17)
+add_test(calendar_double_booking calendar_double_booking)
+
 add_subdirectory(thirdparty)
 
