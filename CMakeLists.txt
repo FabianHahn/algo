@@ -43,5 +43,10 @@ target_link_libraries(regex_match GTest::gtest GTest::gmock)
 set_property(TARGET regex_match PROPERTY CXX_STANDARD 17)
 add_test(regex_match regex_match)
 
+add_executable(mirror_reflection "mirror_reflection.cpp")
+target_link_libraries(mirror_reflection GTest::gtest GTest::gmock)
+set_property(TARGET mirror_reflection PROPERTY CXX_STANDARD 17)
+add_test(mirror_reflection mirror_reflection)
+
 add_subdirectory(thirdparty)
 
