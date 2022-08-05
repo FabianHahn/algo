@@ -48,5 +48,10 @@ target_link_libraries(mirror_reflection GTest::gtest GTest::gmock)
 set_property(TARGET mirror_reflection PROPERTY CXX_STANDARD 17)
 add_test(mirror_reflection mirror_reflection)
 
+add_executable(combination_sum4 "combination_sum.cpp")
+target_link_libraries(combination_sum4 GTest::gtest GTest::gmock)
+set_property(TARGET combination_sum4 PROPERTY CXX_STANDARD 17)
+add_test(combination_sum4 combination_sum4)
+
 add_subdirectory(thirdparty)
 
