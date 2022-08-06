@@ -11,6 +11,7 @@ using ::testing::UnorderedElementsAre;
 
 int racecar(int target) {
   std::vector<int> shortestData(4 * target * 20, 0);
+  std::vector<int> solutions(1001);
   auto shortest = [&](int t, int s, bool p) -> int& {
     assert(s >= 0);
     assert(s <= 9);
@@ -42,6 +43,10 @@ int racecar(int target) {
     }
     if (s > 10) {
       return 999999;
+    }
+
+    if (t > 0 && t <= 1000 && solutions[t] > f) {
+      return -1;
     }
 
     if (shortest(t, s, p) > 0) {
@@ -118,24 +123,22 @@ int racecar(int target) {
         bestSolution = current;
       }
 
-      if (s <= 5) {
-        current = computeShortest(t, s, false, l);
-        if (current >= 0 && current < bestSolution) {
-          bestSolution = current;
-        }
+      current = computeShortest(t, s, false, l);
+      if (current >= 0 && current < bestSolution) {
+        bestSolution = current;
       }
     }
 
     return bestSolution;
   };
 
-  int prev = 0;
-  for (int t = 1; t < target; t++) {
-    prev = computeBest(t, prev + 3);
-    std::cout << t << ": " << prev << std::endl;
+  solutions[0] = 0;
+  for (int t = 1; t <= target; t++) {
+    solutions[t] = computeBest(t, solutions[t - 1] + 3);
+    std::cout << t << ": " << solutions[t] << std::endl;
   }
 
-  return computeBest(target, prev + 3);
+  return solutions[target];
 }
 
 TEST(Racecar, test) {
