@@ -9,14 +9,6 @@
 using ::testing::IsEmpty;
 using ::testing::UnorderedElementsAre;
 
-int mind(int a, int b) {
-  if (a < b) {
-    return a;
-  } else {
-    return b;
-  }
-}
-
 int racecar(int target) {
   std::vector<int> shortestData(4 * target * 20, 0);
   std::vector<int> solutions(1001);
@@ -150,22 +142,16 @@ int racecar(int target) {
 }
 
 int racecar2(int target) {
-  std::vector<int> solutionsPlus(16384, -1);
-  std::vector<int> solutionsMinus(16384, -1);
-  solutionsPlus[0] = 0;
-  solutionsMinus[0] = 1; // R
+  std::vector<int> solutions(16384, -1);
+  solutions[0] = 0;
   for (int i = 1; i <= 14; i++) {
-    solutionsPlus[(1 << i) - 1] = i;
-    solutionsMinus[(1 << i) - 1] = i + 1; // solutionsPlus + R
+    solutions[(1 << i) - 1] = i;
   }
 
-  std::function<int(int, bool)> solve;
-  solve = [&](int t, bool p) -> int {
-    if (p && solutionsPlus[t] >= 0) {
-      return solutionsPlus[t];
-    }
-    if (!p && solutionsMinus[t] >= 0) {
-      return solutionsMinus[t];
+  std::function<int(int)> solve;
+  solve = [&](int t) -> int {
+    if (solutions[t] >= 0) {
+      return solutions[t];
     }
 
     int n = 0;
@@ -176,10 +162,8 @@ int racecar2(int target) {
     }
 
     // overshoot solution
-    int bestPlusX = -1;
-    int bestMinusX = -1;
-    int solutionPlus = n + 1 + solve(twoToTheN - 1 - t, false);
-    int solutionMinus = n + 1 + solve(twoToTheN - 1 - t, true);
+    int bestx = -1;
+    int solution = n + 1 + solve(twoToTheN - 1 - t);
 
     // check if any undershoot solution is better
     int twoToTheNMinusOne = twoToTheN >> 1;
@@ -187,69 +171,32 @@ int racecar2(int target) {
     for (int m = 0; m < n - 1; m++) {
       int x = (1 << m) - 1;
       int y = remaining + x;
-      if (y > twoToTheNMinusOne - 1) {
-        break;
-      }
-      int currentSolutionPlus = n - 1 + 1 + solve(x, true) + 1 + solve(y, true);
-      if (currentSolutionPlus < solutionPlus) {
-        bestPlusX = x;
-        solutionPlus = currentSolutionPlus;
-      }
-      int currentSolutionMinus = n - 1 + 1 + solve(x, true) + 1 + solve(y, false);
-      if (currentSolutionMinus < solutionMinus) {
-        bestMinusX = x;
-        solutionMinus = currentSolutionMinus;
+      int currentSolution = n - 1 + 1 + m + 1 + solve(y);
+      if (currentSolution < solution) {
+        bestx = x;
+        solution = currentSolution;
       }
     }
 
-    if (solutionPlus > solutionMinus + 1) {
-      solutionPlus = solutionMinus + 1;
-      bestPlusX = -2;
-    } else if (solutionMinus > solutionPlus + 1) {
-      solutionMinus = solutionPlus + 1;
-      bestMinusX = -2;
-    }
-
-    int solution = mind(solutionPlus, solutionMinus);
-    /*
-    std::cout << t << ": " << solution << std::endl;
-    std::cout << "\tplus: " << solutionPlus;
-    if (bestPlusX == -2) {
-      std::cout << " (minus solution, then revert)" << std::endl;
-    } else if (bestPlusX == -1) {
+    std::cout << t << ": " << solution;
+    if (bestx == -1) {
       std::cout << " (overshoot to " << (twoToTheN - 1) << " in " << n
                 << " steps, then backtrack by " << (twoToTheN - 1 - t) << " in "
-                << (solutionPlus - n - 1) << " steps)" << std::endl;
+                << (solution - n - 1) << " steps)" << std::endl;
     } else {
       std::cout << " (move to " << (twoToTheNMinusOne - 1) << " in " << (n - 1)
-                << " steps, then backtrack by " << bestPlusX << ", then take remaining "
-                << (remaining + bestPlusX) << ")" << std::endl;
+                << " steps, then backtrack by " << bestx << ", then take remaining "
+                << (remaining + bestx) << ")" << std::endl;
     }
-    std::cout << "\tminus: " << solutionMinus;
-    if (bestMinusX == -2) {
-      std::cout << " (plus solution, then revert)" << std::endl;
-    } else if (bestMinusX == -1) {
-      std::cout << " (overshoot to " << (twoToTheN - 1) << " in " << n
-                << " steps, then backtrack by " << (twoToTheN - 1 - t) << " in "
-                << (solutionMinus - n - 1) << " steps)" << std::endl;
-    } else {
-      std::cout << " (move to " << (twoToTheNMinusOne - 1) << " in " << (n - 1)
-                << " steps, then backtrack by " << bestMinusX << ", then take remaining "
-                << (remaining + bestMinusX) << ")" << std::endl;
-    }
-     */
 
-    solutionsPlus[t] = solutionPlus;
-    solutionsMinus[t] = solutionMinus;
-
+    solutions[t] = solution;
     return solution;
   };
 
-  for (int i = 3; i <= target; i++) {
-    solve(i, true);
-    solve(i, false);
+  for (int i = 2; i <= target; i++) {
+    solve(i);
   }
-  return mind(solve(target, true), solve(target, false));
+  return solve(target);
 }
 
 TEST(Racecar, test) {
@@ -269,7 +216,8 @@ TEST(Racecar, test2) {
   //  EXPECT_THAT(racecar2(4), 5);
   //  EXPECT_THAT(racecar2(5), 7);
   //  EXPECT_THAT(racecar2(6), 5);
-  EXPECT_THAT(racecar2(8681), 34);
+  //EXPECT_THAT(racecar2(176), 22);
+  EXPECT_THAT(racecar2(400), 25);
 }
 
 int main(int argc, char** argv) {
