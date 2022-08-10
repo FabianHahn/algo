@@ -63,5 +63,10 @@ target_link_libraries(largest_rectangle_area GTest::gtest GTest::gmock)
 set_property(TARGET largest_rectangle_area PROPERTY CXX_STANDARD 17)
 add_test(largest_rectangle_area largest_rectangle_area)
 
+add_executable(hamming_weight "hamming_weight.cpp")
+target_link_libraries(hamming_weight GTest::gtest GTest::gmock)
+set_property(TARGET hamming_weight PROPERTY CXX_STANDARD 17)
+add_test(hamming_weight hamming_weight)
+
 add_subdirectory(thirdparty)
 
