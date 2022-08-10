@@ -58,5 +58,10 @@ target_link_libraries(racecar GTest::gtest GTest::gmock)
 set_property(TARGET racecar PROPERTY CXX_STANDARD 17)
 add_test(racecar racecar)
 
+add_executable(largest_rectangle_area "largest_rectangle_area.cpp")
+target_link_libraries(largest_rectangle_area GTest::gtest GTest::gmock)
+set_property(TARGET largest_rectangle_area PROPERTY CXX_STANDARD 17)
+add_test(largest_rectangle_area largest_rectangle_area)
+
 add_subdirectory(thirdparty)
 
