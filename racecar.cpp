@@ -135,7 +135,7 @@ int racecar(int target) {
   solutions[0] = 0;
   for (int t = 1; t <= target; t++) {
     solutions[t] = computeBest(t, solutions[t - 1] + 3);
-    std::cout << t << ": " << solutions[t] << std::endl;
+//    std::cout << t << ": " << solutions[t] << std::endl;
   }
 
   return solutions[target];
@@ -178,16 +178,16 @@ int racecar2(int target) {
       }
     }
 
-    std::cout << t << ": " << solution;
-    if (bestx == -1) {
-      std::cout << " (overshoot to " << (twoToTheN - 1) << " in " << n
-                << " steps, then backtrack by " << (twoToTheN - 1 - t) << " in "
-                << (solution - n - 1) << " steps)" << std::endl;
-    } else {
-      std::cout << " (move to " << (twoToTheNMinusOne - 1) << " in " << (n - 1)
-                << " steps, then backtrack by " << bestx << ", then take remaining "
-                << (remaining + bestx) << ")" << std::endl;
-    }
+//    std::cout << t << ": " << solution;
+//    if (bestx == -1) {
+//      std::cout << " (overshoot to " << (twoToTheN - 1) << " in " << n
+//                << " steps, then backtrack by " << (twoToTheN - 1 - t) << " in "
+//                << (solution - n - 1) << " steps)" << std::endl;
+//    } else {
+//      std::cout << " (move to " << (twoToTheNMinusOne - 1) << " in " << (n - 1)
+//                << " steps, then backtrack by " << bestx << ", then take remaining "
+//                << (remaining + bestx) << ")" << std::endl;
+//    }
 
     solutions[t] = solution;
     return solution;
@@ -209,7 +209,7 @@ TEST(Racecar, test) {
   //  EXPECT_THAT(racecar(8), 6);
   //  EXPECT_THAT(racecar(9), 8);
   //  EXPECT_THAT(racecar(10), 7);
-  EXPECT_THAT(racecar(1000), 7);
+  EXPECT_THAT(racecar(100), 19);
 }
 
 TEST(Racecar, test2) {
