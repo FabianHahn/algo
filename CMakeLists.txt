@@ -73,5 +73,10 @@ target_link_libraries(longest_substring GTest::gtest GTest::gmock)
 set_property(TARGET longest_substring PROPERTY CXX_STANDARD 17)
 add_test(longest_substring longest_substring)
 
+add_executable(merge_k_lists "merge_k_lists.cpp")
+target_link_libraries(merge_k_lists GTest::gtest GTest::gmock)
+set_property(TARGET merge_k_lists PROPERTY CXX_STANDARD 17)
+add_test(merge_k_lists merge_k_lists)
+
 add_subdirectory(thirdparty)
 
