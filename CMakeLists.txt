@@ -78,5 +78,10 @@ target_link_libraries(merge_k_lists GTest::gtest GTest::gmock)
 set_property(TARGET merge_k_lists PROPERTY CXX_STANDARD 17)
 add_test(merge_k_lists merge_k_lists)
 
+add_executable(longest_palindromic_substring "longest_palindromic_substring.cpp")
+target_link_libraries(longest_palindromic_substring GTest::gtest GTest::gmock)
+set_property(TARGET longest_palindromic_substring PROPERTY CXX_STANDARD 17)
+add_test(longest_palindromic_substring longest_palindromic_substring)
+
 add_subdirectory(thirdparty)
 
