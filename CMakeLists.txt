@@ -68,5 +68,10 @@ target_link_libraries(hamming_weight GTest::gtest GTest::gmock)
 set_property(TARGET hamming_weight PROPERTY CXX_STANDARD 17)
 add_test(hamming_weight hamming_weight)
 
+add_executable(longest_substring "longest_substring.cpp")
+target_link_libraries(longest_substring GTest::gtest GTest::gmock)
+set_property(TARGET longest_substring PROPERTY CXX_STANDARD 17)
+add_test(longest_substring longest_substring)
+
 add_subdirectory(thirdparty)
 
