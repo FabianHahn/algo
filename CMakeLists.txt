@@ -83,5 +83,10 @@ target_link_libraries(longest_palindromic_substring GTest::gtest GTest::gmock)
 set_property(TARGET longest_palindromic_substring PROPERTY CXX_STANDARD 17)
 add_test(longest_palindromic_substring longest_palindromic_substring)
 
+add_executable(trie "trie.cpp")
+target_link_libraries(trie GTest::gtest GTest::gmock)
+set_property(TARGET trie PROPERTY CXX_STANDARD 17)
+add_test(trie trie)
+
 add_subdirectory(thirdparty)
 
