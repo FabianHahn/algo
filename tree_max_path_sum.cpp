@@ -19,52 +19,65 @@ struct TreeNode {
 };
 
 int maxPathSum(TreeNode* root) {
-  std::unordered_map<TreeNode*, int> maxPaths;
-
-  std::function<int(TreeNode*)> traverse;
+  std::function<std::pair<int,int>(TreeNode*)> traverse;
   traverse = [&](TreeNode* node) {
     if (node == nullptr) {
-      return 0;
+      return std::make_pair(0, 0);
+    }
+    if (node->left == nullptr && node->right == nullptr) {
+      return std::make_pair(node->val, node->val);
     }
 
     int maxPath = node->val;
     int maxDown = node->val;
 
-    int maxLeft = traverse(node->left);
-    if (maxLeft > 0) {
-      maxPath += maxLeft;
-    }
-
-    int maxRight = traverse(node->right);
-    if (maxRight > 0) {
-      maxPath += maxRight;
-    }
-
-    if (maxLeft > 0 || maxRight > 0) {
-      if (maxLeft > maxRight) {
-        maxDown += maxLeft;
-      } else {
-        maxDown += maxRight;
+    int maxPathLeft = INT_MIN;
+    int maxDownLeft = INT_MIN;
+    if (node->left != nullptr) {
+      auto left = traverse(node->left);
+      maxPathLeft = left.first;
+      maxDownLeft = left.second;
+      if (maxDownLeft > 0) {
+        maxPath += maxDownLeft;
       }
     }
 
-    maxPaths[node] = maxPath;
-    return maxDown;
+    int maxPathRight = INT_MIN;
+    int maxDownRight = INT_MIN;
+    if (node->right != nullptr) {
+      auto right = traverse(node->right);
+      maxPathRight = right.first;
+      maxDownRight = right.second;
+      if (maxDownRight > 0) {
+        maxPath += maxDownRight;
+      }
+    }
+
+    if (maxDownLeft > 0 || maxDownRight > 0) {
+      if (maxDownLeft > maxDownRight) {
+        maxDown += maxDownLeft;
+      } else {
+        maxDown += maxDownRight;
+      }
+    }
+
+    if (maxPathLeft > maxPath) {
+      maxPath = maxPathLeft;
+    }
+    if (maxPathRight > maxPath) {
+      maxPath = maxPathRight;
+    }
+
+    return std::make_pair(maxPath, maxDown);
   };
 
-  traverse(root);
-
-  int maxPath = INT_MIN;
-  for (auto entry : maxPaths) {
-    if (entry.second > maxPath) {
-      maxPath = entry.second;
-    }
-  }
-
-  return maxPath;
+  auto result = traverse(root);
+  return result.first;
 }
 
 TEST(TreeMaxPathSum, test) {
+  ASSERT_EQ(maxPathSum(new TreeNode(-3)), -3);
+  ASSERT_EQ(maxPathSum(new TreeNode(-2, new TreeNode(-1), nullptr)), -1);
   ASSERT_EQ(maxPathSum(new TreeNode(1, new TreeNode(2), new TreeNode(3))), 6);
   ASSERT_EQ(
       maxPathSum(
