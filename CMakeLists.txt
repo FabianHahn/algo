@@ -88,5 +88,10 @@ target_link_libraries(trie GTest::gtest GTest::gmock)
 set_property(TARGET trie PROPERTY CXX_STANDARD 17)
 add_test(trie trie)
 
+add_executable(num_islands "num_islands.cpp")
+target_link_libraries(num_islands GTest::gtest GTest::gmock)
+set_property(TARGET num_islands PROPERTY CXX_STANDARD 17)
+add_test(num_islands num_islands)
+
 add_subdirectory(thirdparty)
 
