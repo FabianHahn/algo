@@ -93,5 +93,10 @@ target_link_libraries(num_islands GTest::gtest GTest::gmock)
 set_property(TARGET num_islands PROPERTY CXX_STANDARD 17)
 add_test(num_islands num_islands)
 
+add_executable(tree_max_path_sum "tree_max_path_sum.cpp")
+target_link_libraries(tree_max_path_sum GTest::gtest GTest::gmock)
+set_property(TARGET tree_max_path_sum PROPERTY CXX_STANDARD 17)
+add_test(tree_max_path_sum tree_max_path_sum)
+
 add_subdirectory(thirdparty)
 
