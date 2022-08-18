@@ -108,5 +108,10 @@ target_link_libraries(reduce_array_size GTest::gtest GTest::gmock)
 set_property(TARGET reduce_array_size PROPERTY CXX_STANDARD 17)
 add_test(reduce_array_size reduce_array_size)
 
+add_executable(insert_interval "insert_interval.cpp")
+target_link_libraries(insert_interval GTest::gtest GTest::gmock)
+set_property(TARGET insert_interval PROPERTY CXX_STANDARD 17)
+add_test(insert_interval insert_interval)
+
 add_subdirectory(thirdparty)
 
