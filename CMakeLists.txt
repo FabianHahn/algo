@@ -113,5 +113,10 @@ target_link_libraries(insert_interval GTest::gtest GTest::gmock)
 set_property(TARGET insert_interval PROPERTY CXX_STANDARD 17)
 add_test(insert_interval insert_interval)
 
+add_executable(k_largest "k_largest.cpp")
+target_link_libraries(k_largest GTest::gtest GTest::gmock)
+set_property(TARGET k_largest PROPERTY CXX_STANDARD 17)
+add_test(k_largest k_largest)
+
 add_subdirectory(thirdparty)
 
