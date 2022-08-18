@@ -98,5 +98,10 @@ target_link_libraries(tree_max_path_sum GTest::gtest GTest::gmock)
 set_property(TARGET tree_max_path_sum PROPERTY CXX_STANDARD 17)
 add_test(tree_max_path_sum tree_max_path_sum)
 
+add_executable(k_closest "k_closest.cpp")
+target_link_libraries(k_closest GTest::gtest GTest::gmock)
+set_property(TARGET k_closest PROPERTY CXX_STANDARD 17)
+add_test(k_closest k_closest)
+
 add_subdirectory(thirdparty)
 
