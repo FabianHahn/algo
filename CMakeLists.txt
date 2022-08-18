@@ -103,5 +103,10 @@ target_link_libraries(k_closest GTest::gtest GTest::gmock)
 set_property(TARGET k_closest PROPERTY CXX_STANDARD 17)
 add_test(k_closest k_closest)
 
+add_executable(reduce_array_size "reduce_array_size.cpp")
+target_link_libraries(reduce_array_size GTest::gtest GTest::gmock)
+set_property(TARGET reduce_array_size PROPERTY CXX_STANDARD 17)
+add_test(reduce_array_size reduce_array_size)
+
 add_subdirectory(thirdparty)
 
