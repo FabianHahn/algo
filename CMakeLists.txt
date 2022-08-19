@@ -118,5 +118,10 @@ target_link_libraries(k_largest GTest::gtest GTest::gmock)
 set_property(TARGET k_largest PROPERTY CXX_STANDARD 17)
 add_test(k_largest k_largest)
 
+add_executable(network_delay_time "network_delay_time.cpp")
+target_link_libraries(network_delay_time GTest::gtest GTest::gmock)
+set_property(TARGET network_delay_time PROPERTY CXX_STANDARD 17)
+add_test(network_delay_time network_delay_time)
+
 add_subdirectory(thirdparty)
 
