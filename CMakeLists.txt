@@ -128,5 +128,9 @@ target_link_libraries(minimum_window_substring GTest::gtest GTest::gmock)
 set_property(TARGET minimum_window_substring PROPERTY CXX_STANDARD 17)
 add_test(minimum_window_substring minimum_window_substring)
 
+add_executable(word_ladder "word_ladder.cpp")
+target_link_libraries(word_ladder GTest::gtest GTest::gmock)
+set_property(TARGET word_ladder PROPERTY CXX_STANDARD 17)
+add_test(word_ladder word_ladder)
 add_subdirectory(thirdparty)
 
