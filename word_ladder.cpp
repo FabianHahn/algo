@@ -22,47 +22,52 @@ bool differsByOne(const std::string& a, const std::string& b) {
 }
 
 int ladderLength(std::string beginWord, std::string endWord, std::vector<std::string>& wordList) {
-  int endIndex = -1;
+  int k = beginWord.size();
+
   wordList.push_back(beginWord);
-  std::vector<std::vector<int>> graph(wordList.size());
-  for (int i = 0; i < wordList.size(); i++) {
-    const std::string& word1 = wordList[i];
-    for (int j = i + 1; j < wordList.size(); j++) {
-      const std::string& word2 = wordList[j];
-      if (differsByOne(word1, word2)) {
-        graph[i].emplace_back(j);
-        graph[j].emplace_back(i);
-      }
-    }
-
-    if (word1 == endWord) {
-      endIndex = i;
-    }
+  std::unordered_map<std::string, int> distances;
+  for(const auto& word: wordList) {
+    distances[word] = -1;
   }
+  distances[beginWord] = 1;
 
-  if (endIndex == -1) {
+  if (distances.find(endWord) == distances.end()) {
     return 0;
   }
 
-  std::vector<int> distances(wordList.size(), -1);
-  distances[wordList.size() - 1] = 1;
-  std::deque<int> queue{(int) wordList.size() - 1};
+  std::deque<std::string> queue{beginWord};
   while (!queue.empty()) {
-    int current = queue.front();
+    std::string current = queue.front();
     queue.pop_front();
     int distance = distances[current];
 
-    if (current == endIndex) {
+    if (current == endWord) {
       return distance;
     }
 
-    for (int neighbor : graph[current]) {
-      if (distances[neighbor] >= 0) {
-        continue;
+    std::string modified = current;
+    for (int i = 0; i < k; i++) {
+      for (char c = 'a'; c <= 'z'; c++) {
+        if (current[i] == c) {
+          continue;
+        }
+
+        modified[i] = c;
+
+        auto query = distances.find(modified);
+        if (query == distances.end()) {
+          continue;
+        }
+
+        if (query->second >= 0) {
+          continue;
+        }
+
+        query->second = distance + 1;
+        queue.emplace_back(modified);
       }
 
-      distances[neighbor] = distance + 1;
-      queue.emplace_back(neighbor);
+      modified[i] = current[i];
     }
   }
 
