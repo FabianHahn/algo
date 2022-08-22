@@ -123,5 +123,10 @@ target_link_libraries(network_delay_time GTest::gtest GTest::gmock)
 set_property(TARGET network_delay_time PROPERTY CXX_STANDARD 17)
 add_test(network_delay_time network_delay_time)
 
+add_executable(minimum_window_substring "minimum_window_substring.cpp")
+target_link_libraries(minimum_window_substring GTest::gtest GTest::gmock)
+set_property(TARGET minimum_window_substring PROPERTY CXX_STANDARD 17)
+add_test(minimum_window_substring minimum_window_substring)
+
 add_subdirectory(thirdparty)
 
