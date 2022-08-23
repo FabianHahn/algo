@@ -132,5 +132,10 @@ add_executable(word_ladder "word_ladder.cpp")
 target_link_libraries(word_ladder GTest::gtest GTest::gmock)
 set_property(TARGET word_ladder PROPERTY CXX_STANDARD 17)
 add_test(word_ladder word_ladder)
-add_subdirectory(thirdparty)
 
+add_executable(stock_trading "stock_trading.cpp")
+target_link_libraries(stock_trading GTest::gtest GTest::gmock)
+set_property(TARGET stock_trading PROPERTY CXX_STANDARD 17)
+add_test(stock_trading stock_trading)
+
+add_subdirectory(thirdparty)
