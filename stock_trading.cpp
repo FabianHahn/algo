@@ -14,7 +14,7 @@ int maxProfit(std::vector<int>& prices) {
   int n = prices.size();
 
   std::vector<int> wait(n, -1);
-  std::vector<int> hold(n * 1001, -1);
+  std::vector<std::unordered_map<int, int>> hold(n);
 
   std::function<int(int, int)> bestPrice;
   bestPrice = [&](int i, int k) {
@@ -29,13 +29,16 @@ int maxProfit(std::vector<int>& prices) {
       }
 
       int best = bestPrice(i - 1, -1); // wait
-      if (i > 0) {
-        for (int j = 0; j <= 1000; j++) {
+      if (i > 1) {
+        for (auto entry : hold[i - 2]) {
+          int j = entry.first;
+          int price = entry.second;
+
           if (j >= prices[i - 1]) {
-            break;
+            continue;
           }
 
-          int sell = bestPrice(i - 2, j) + prices[i - 1] - j;
+          int sell = price + prices[i - 1] - j;
           if (sell > best) {
             best = sell;
           }
@@ -49,9 +52,9 @@ int maxProfit(std::vector<int>& prices) {
         return INT_MIN;
       }
 
-      int cached = hold[i * 1001 + k];
-      if (cached != -1) {
-        return cached;
+      auto query = hold[i].find(k);
+      if (query != hold[i].end()) {
+        return query->second;
       }
 
       int best = bestPrice(i - 1, k); // hold
@@ -61,12 +64,20 @@ int maxProfit(std::vector<int>& prices) {
           best = buy;
         }
       }
-      hold[i * 1001 + k] = best;
+      if (best > INT_MIN) {
+        hold[i][k] = best;
+      }
       return best;
     }
   };
 
   for (int i = 0; i < n; i++) {
+    bestPrice(i, prices[i]);
+    if (i > 0) {
+      for (auto entry : hold[i - 1]) {
+        bestPrice(i, entry.first);
+      }
+    }
     bestPrice(i, -1);
     // std::cout << "best price " << i << ": " << bestPrice(i, -1) << std::endl;
   }
