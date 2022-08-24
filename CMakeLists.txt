@@ -138,4 +138,9 @@ target_link_libraries(stock_trading GTest::gtest GTest::gmock)
 set_property(TARGET stock_trading PROPERTY CXX_STANDARD 17)
 add_test(stock_trading stock_trading)
 
+add_executable(lru_cache "lru_cache.cpp")
+target_link_libraries(lru_cache GTest::gtest GTest::gmock)
+set_property(TARGET lru_cache PROPERTY CXX_STANDARD 17)
+add_test(lru_cache lru_cache)
+
 add_subdirectory(thirdparty)
