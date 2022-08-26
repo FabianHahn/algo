@@ -143,4 +143,9 @@ target_link_libraries(lru_cache GTest::gtest GTest::gmock)
 set_property(TARGET lru_cache PROPERTY CXX_STANDARD 17)
 add_test(lru_cache lru_cache)
 
+add_executable(reconstruct_itinerary "reconstruct_itinerary.cpp")
+target_link_libraries(reconstruct_itinerary GTest::gtest GTest::gmock)
+set_property(TARGET reconstruct_itinerary PROPERTY CXX_STANDARD 17)
+add_test(reconstruct_itinerary reconstruct_itinerary)
+
 add_subdirectory(thirdparty)
