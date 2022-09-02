@@ -148,4 +148,10 @@ target_link_libraries(reconstruct_itinerary GTest::gtest GTest::gmock)
 set_property(TARGET reconstruct_itinerary PROPERTY CXX_STANDARD 17)
 add_test(reconstruct_itinerary reconstruct_itinerary)
 
+add_executable(min_interval "min_interval.cpp")
+target_compile_definitions(min_interval PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(min_interval GTest::gtest GTest::gmock)
+set_property(TARGET min_interval PROPERTY CXX_STANDARD 17)
+add_test(min_interval min_interval)
+
 add_subdirectory(thirdparty)
