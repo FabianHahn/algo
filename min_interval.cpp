@@ -88,37 +88,56 @@ bool insertInterval(IntervalTreeNode* node, const std::vector<int>& interval, in
 }
 
 void findIntervals(
-    IntervalTreeNode* node, int query, int lo, int hi, std::vector<std::vector<int>>& intervals) {
+    IntervalTreeNode* node, int query, int lo, int hi, int& bestSize) {
   if (node == nullptr) {
     return;
   }
 
   if (query >= lo && query <= hi && node->shortestMin > INT_MIN) {
-    intervals.emplace_back(std::vector<int>{node->shortestMin, node->shortestMax});
+    int nodeIntervalSize = node->shortestMax - node->shortestMin + 1;
+    if (nodeIntervalSize < bestSize) {
+      bestSize = nodeIntervalSize;
+    }
   }
 
   if (node->left != nullptr || node->right != nullptr) {
     if (query == node->delimiter && node->hasPoint) {
-      intervals.emplace_back(std::vector<int>{query, query});
+      bestSize = 1;
+      return;
     }
 
     if (query <= node->delimiter) {
-      findIntervals(node->left, query, lo, node->delimiter, intervals);
+      findIntervals(node->left, query, lo, node->delimiter, bestSize);
     }
     if (query >= node->delimiter) {
-      findIntervals(node->right, query, node->delimiter, hi, intervals);
+      findIntervals(node->right, query, node->delimiter, hi, bestSize);
     }
   }
 }
 
 std::vector<int> minInterval(std::vector<std::vector<int>>& intervals, std::vector<int>& queries) {
-  std::set<int> delimitersSet;
-  for (const auto& interval : intervals) {
-    delimitersSet.insert(interval[0]);
-    delimitersSet.insert(interval[1]);
+  std::vector<int> delimiters;
+  {
+    std::unordered_set<int> delimitersSet;
+    for (const auto& interval : intervals) {
+      {
+        auto query = delimitersSet.find(interval[0]);
+        if (query == delimitersSet.end()) {
+          delimiters.push_back(interval[0]);
+          delimitersSet.insert(interval[0]);
+        }
+      }
+      {
+        auto query = delimitersSet.find(interval[1]);
+        if (query == delimitersSet.end()) {
+          delimiters.push_back(interval[1]);
+          delimitersSet.insert(interval[1]);
+        }
+      }
+    }
   }
 
-  std::vector<int> delimiters(delimitersSet.begin(), delimitersSet.end());
+  std::sort(delimiters.begin(), delimiters.end());
   IntervalTreeNode* root = createSubtree(delimiters, 0, delimiters.size());
   for (const auto& interval : intervals) {
     bool inserted = insertInterval(root, interval, delimiters.front(), delimiters.back());
@@ -128,16 +147,8 @@ std::vector<int> minInterval(std::vector<std::vector<int>>& intervals, std::vect
   std::vector<int> result;
   std::vector<std::vector<int>> queryResults;
   for (int query : queries) {
-    queryResults.clear();
-    findIntervals(root, query, delimiters.front(), delimiters.back(), queryResults);
-
     int bestSize = INT_MAX;
-    for (const auto& interval : queryResults) {
-      int intervalSize = interval[1] - interval[0] + 1;
-      if (intervalSize < bestSize) {
-        bestSize = intervalSize;
-      }
-    }
+    findIntervals(root, query, delimiters.front(), delimiters.back(), bestSize);
 
     if (bestSize < INT_MAX) {
       result.emplace_back(bestSize);
