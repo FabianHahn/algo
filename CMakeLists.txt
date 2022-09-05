@@ -154,4 +154,10 @@ target_link_libraries(min_interval GTest::gtest GTest::gmock)
 set_property(TARGET min_interval PROPERTY CXX_STANDARD 17)
 add_test(min_interval min_interval)
 
+add_executable(sliding_window_max "sliding_window_max.cpp")
+target_compile_definitions(sliding_window_max PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(sliding_window_max GTest::gtest GTest::gmock)
+set_property(TARGET sliding_window_max PROPERTY CXX_STANDARD 17)
+add_test(sliding_window_max sliding_window_max)
+
 add_subdirectory(thirdparty)
