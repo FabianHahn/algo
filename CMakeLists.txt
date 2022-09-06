@@ -160,4 +160,10 @@ target_link_libraries(sliding_window_max GTest::gtest GTest::gmock)
 set_property(TARGET sliding_window_max PROPERTY CXX_STANDARD 17)
 add_test(sliding_window_max sliding_window_max)
 
+add_executable(longest_dictionary_word "longest_dictionary_word.cpp")
+target_compile_definitions(longest_dictionary_word PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(longest_dictionary_word GTest::gtest GTest::gmock)
+set_property(TARGET longest_dictionary_word PROPERTY CXX_STANDARD 17)
+add_test(longest_dictionary_word longest_dictionary_word)
+
 add_subdirectory(thirdparty)
