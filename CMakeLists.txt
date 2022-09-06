@@ -166,4 +166,10 @@ target_link_libraries(longest_dictionary_word GTest::gtest GTest::gmock)
 set_property(TARGET longest_dictionary_word PROPERTY CXX_STANDARD 17)
 add_test(longest_dictionary_word longest_dictionary_word)
 
+add_executable(max_points_on_line "max_points_on_line.cpp")
+target_compile_definitions(max_points_on_line PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(max_points_on_line GTest::gtest GTest::gmock)
+set_property(TARGET max_points_on_line PROPERTY CXX_STANDARD 17)
+add_test(max_points_on_line max_points_on_line)
+
 add_subdirectory(thirdparty)
