@@ -178,4 +178,10 @@ target_link_libraries(group_anagrams GTest::gtest GTest::gmock)
 set_property(TARGET group_anagrams PROPERTY CXX_STANDARD 17)
 add_test(group_anagrams group_anagrams)
 
+add_executable(median_of_stream "median_of_stream.cpp")
+target_compile_definitions(median_of_stream PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(median_of_stream GTest::gtest GTest::gmock)
+set_property(TARGET median_of_stream PROPERTY CXX_STANDARD 17)
+add_test(median_of_stream median_of_stream)
+
 add_subdirectory(thirdparty)
