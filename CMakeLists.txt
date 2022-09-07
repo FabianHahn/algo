@@ -172,4 +172,10 @@ target_link_libraries(max_points_on_line GTest::gtest GTest::gmock)
 set_property(TARGET max_points_on_line PROPERTY CXX_STANDARD 17)
 add_test(max_points_on_line max_points_on_line)
 
+add_executable(group_anagrams "group_anagrams.cpp")
+target_compile_definitions(group_anagrams PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(group_anagrams GTest::gtest GTest::gmock)
+set_property(TARGET group_anagrams PROPERTY CXX_STANDARD 17)
+add_test(group_anagrams group_anagrams)
+
 add_subdirectory(thirdparty)
