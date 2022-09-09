@@ -190,4 +190,10 @@ target_link_libraries(character_stream GTest::gtest GTest::gmock)
 set_property(TARGET character_stream PROPERTY CXX_STANDARD 17)
 add_test(character_stream character_stream)
 
+add_executable(word_search "word_search.cpp")
+target_compile_definitions(word_search PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(word_search GTest::gtest GTest::gmock)
+set_property(TARGET word_search PROPERTY CXX_STANDARD 17)
+add_test(word_search word_search)
+
 add_subdirectory(thirdparty)
