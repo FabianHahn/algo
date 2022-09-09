@@ -196,4 +196,10 @@ target_link_libraries(word_search GTest::gtest GTest::gmock)
 set_property(TARGET word_search PROPERTY CXX_STANDARD 17)
 add_test(word_search word_search)
 
+add_executable(word_search2 "word_search2.cpp")
+target_compile_definitions(word_search2 PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(word_search2 GTest::gtest GTest::gmock)
+set_property(TARGET word_search2 PROPERTY CXX_STANDARD 17)
+add_test(word_search2 word_search2)
+
 add_subdirectory(thirdparty)
