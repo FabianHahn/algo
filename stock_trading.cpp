@@ -144,49 +144,74 @@ TEST(StockTrading3, test) {
 }
 
 int maxProfit4(int k, std::vector<int> prices) {
-  int n = prices.size();
-
-  std::vector<int> maxBuyingProfitDp(n * k, -1);
-  std::vector<int> maxSellingProfitDp(n * k, -1);
-  std::function<int(int, int)> maxBuyingProfit;
-  std::function<int(int, int)> maxSellingProfit;
-  maxBuyingProfit = [&](int startingDay, int buys) {
-    if (startingDay >= n || buys == 0) {
-      return 0;
+  std::vector<int> kBuy(k, INT_MIN);
+  std::vector<int> kBuyKSell(k, INT_MIN);
+  for (int price : prices) {
+    for (int i = 0; i < k; i++) {
+      kBuy[i] = std::max(kBuy[i], (i > 0 ? kBuyKSell[i - 1] : 0) - price);
+      kBuyKSell[i] = std::max(kBuyKSell[i], kBuy[i] + price);
     }
+  }
 
-    int& result = maxBuyingProfitDp[startingDay * k + (buys - 1)];
-    if (result > -1) {
-      return result;
+  int maxProfit = 0;
+  for (int profit : kBuyKSell) {
+    if (profit > maxProfit) {
+      maxProfit = profit;
     }
+  }
 
-    int waitProfit = maxBuyingProfit(startingDay + 1, buys);
-    int buyProfit = maxSellingProfit(startingDay + 1, buys - 1) - prices[startingDay];
-    result = std::max(waitProfit, buyProfit);
-    return result;
-  };
-  maxSellingProfit = [&](int startingDay, int buys) {
-    if (startingDay >= n) {
-      return 0;
-    }
-
-    int& result = maxSellingProfitDp[startingDay * k + buys];
-    if (result > -1) {
-      return result;
-    }
-
-    int waitProfit = maxSellingProfit(startingDay + 1, buys);
-    int sellProfit = maxBuyingProfit(startingDay + 1, buys) + prices[startingDay];
-    result = std::max(waitProfit, sellProfit);
-    return result;
-  };
-
-  return maxBuyingProfit(0, k);
+  return maxProfit;
 }
 
 TEST(StockTrading4, test) {
   EXPECT_THAT(maxProfit4(2, std::vector<int>{2, 4, 1}), 2);
   EXPECT_THAT(maxProfit4(2, std::vector<int>{3, 2, 6, 5, 0, 3}), 7);
+}
+
+int maxProfitFee(std::vector<int> prices, int fee) {
+  int n = prices.size();
+
+  std::vector maxProfitBuyingDp(n, -1);
+  std::vector maxProfitSellingDp(n, -1);
+  std::function<int(int)> maxProfitBuying;
+  std::function<int(int)> maxProfitSelling;
+  maxProfitBuying = [&](int startingDay) {
+    if (startingDay >= n) {
+      return 0;
+    }
+
+    int& result = maxProfitBuyingDp[startingDay];
+    if (result >= 0) {
+      return result;
+    }
+
+    int waitingProfit = maxProfitBuying(startingDay + 1);
+    int buyingProfit = maxProfitSelling(startingDay + 1) - prices[startingDay] - fee;
+    result = std::max(waitingProfit, buyingProfit);
+    return result;
+  };
+  maxProfitSelling = [&](int startingDay) {
+    if (startingDay >= n) {
+      return 0;
+    }
+
+    int& result = maxProfitSellingDp[startingDay];
+    if (result >= 0) {
+      return result;
+    }
+
+    int waitingProfit = maxProfitSelling(startingDay + 1);
+    int sellingProfit = maxProfitBuying(startingDay + 1) + prices[startingDay];
+    result = std::max(waitingProfit, sellingProfit);
+    return result;
+  };
+
+  return maxProfitBuying(0);
+}
+
+TEST(StockTradingFee, test) {
+  EXPECT_THAT(maxProfitFee(std::vector<int>{1, 3, 2, 8, 4, 9}, 2), 8);
+  EXPECT_THAT(maxProfitFee(std::vector<int>{1, 3, 7, 5, 10, 3}, 3), 6);
 }
 
 int main(int argc, char** argv) {
