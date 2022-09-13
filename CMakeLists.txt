@@ -202,4 +202,10 @@ target_link_libraries(word_search2 GTest::gtest GTest::gmock)
 set_property(TARGET word_search2 PROPERTY CXX_STANDARD 17)
 add_test(word_search2 word_search2)
 
+add_executable(coin_piles "coin_piles.cpp")
+target_compile_definitions(coin_piles PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(coin_piles GTest::gtest GTest::gmock)
+set_property(TARGET coin_piles PROPERTY CXX_STANDARD 17)
+add_test(coin_piles coin_piles)
+
 add_subdirectory(thirdparty)
