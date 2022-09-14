@@ -208,4 +208,10 @@ target_link_libraries(coin_piles GTest::gtest GTest::gmock)
 set_property(TARGET coin_piles PROPERTY CXX_STANDARD 17)
 add_test(coin_piles coin_piles)
 
+add_executable(speed_limits "speed_limits.cpp")
+target_compile_definitions(speed_limits PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(speed_limits GTest::gtest GTest::gmock)
+set_property(TARGET speed_limits PROPERTY CXX_STANDARD 17)
+add_test(speed_limits speed_limits)
+
 add_subdirectory(thirdparty)
