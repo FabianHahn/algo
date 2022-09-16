@@ -214,4 +214,10 @@ target_link_libraries(speed_limits GTest::gtest GTest::gmock)
 set_property(TARGET speed_limits PROPERTY CXX_STANDARD 17)
 add_test(speed_limits speed_limits)
 
+add_executable(word_pattern "word_pattern.cpp")
+target_compile_definitions(word_pattern PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(word_pattern GTest::gtest GTest::gmock)
+set_property(TARGET word_pattern PROPERTY CXX_STANDARD 17)
+add_test(word_pattern word_pattern)
+
 add_subdirectory(thirdparty)
