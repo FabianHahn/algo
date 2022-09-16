@@ -220,4 +220,10 @@ target_link_libraries(word_pattern GTest::gtest GTest::gmock)
 set_property(TARGET word_pattern PROPERTY CXX_STANDARD 17)
 add_test(word_pattern word_pattern)
 
+add_executable(maximum_multiplication_score "maximum_multiplication_score.cpp")
+target_compile_definitions(maximum_multiplication_score PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(maximum_multiplication_score GTest::gtest GTest::gmock)
+set_property(TARGET maximum_multiplication_score PROPERTY CXX_STANDARD 17)
+add_test(maximum_multiplication_score maximum_multiplication_score)
+
 add_subdirectory(thirdparty)
