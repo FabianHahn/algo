@@ -226,4 +226,10 @@ target_link_libraries(maximum_multiplication_score GTest::gtest GTest::gmock)
 set_property(TARGET maximum_multiplication_score PROPERTY CXX_STANDARD 17)
 add_test(maximum_multiplication_score maximum_multiplication_score)
 
+add_executable(happy_number "happy_number.cpp")
+target_compile_definitions(happy_number PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(happy_number GTest::gtest GTest::gmock)
+set_property(TARGET happy_number PROPERTY CXX_STANDARD 17)
+add_test(happy_number happy_number)
+
 add_subdirectory(thirdparty)
