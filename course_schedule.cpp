@@ -141,8 +141,51 @@ int scheduleCourseCull(std::vector<std::vector<int>>& courses) {
   return computeMaxCourses(1, 0, score, 0);
 }
 
+int scheduleCourseForward(std::vector<std::vector<int>>& courses) {
+  int n = courses.size();
+  if (courses.empty()) {
+    return 0;
+  }
+
+  std::sort(courses.begin(), courses.end(), [](const auto& a, const auto& b) {
+    int lastDayA = a[1];
+    int lastDayB = b[1];
+    return lastDayA < lastDayB;
+  });
+
+  int lastDay = 0;
+  for (const auto& course : courses) {
+    if (course[1] > lastDay) {
+      lastDay = course[1];
+    }
+  }
+
+  if (lastDay < 1) {
+    return 0;
+  }
+
+  std::vector<int> maxCoursesDp(lastDay + 2);
+  for (int nextCourse = n - 1; nextCourse >= 0; nextCourse--) {
+    const auto& course = courses[nextCourse];
+    int duration = course[0];
+    int lastEndDay = course[1];
+    int lastStartDay = lastEndDay - duration + 1;
+
+    for (int day = 1; day <= lastDay; day++) {
+      int skip = maxCoursesDp[day];
+      if (day > lastStartDay) {
+        break;
+      }
+      int take = maxCoursesDp[day + duration] + 1;
+      maxCoursesDp[day] = std::max(skip, take);
+    }
+  }
+
+  return maxCoursesDp[1];
+}
+
 int scheduleCourseTest(std::vector<std::vector<int>> courses) {
-  return scheduleCourseCull(courses);
+  return scheduleCourseForward(courses);
 }
 
 int scheduleCourseTestString(std::string input) {
