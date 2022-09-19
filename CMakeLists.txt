@@ -232,4 +232,10 @@ target_link_libraries(happy_number GTest::gtest GTest::gmock)
 set_property(TARGET happy_number PROPERTY CXX_STANDARD 17)
 add_test(happy_number happy_number)
 
+add_executable(course_schedule "course_schedule.cpp")
+target_compile_definitions(course_schedule PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(course_schedule GTest::gtest GTest::gmock)
+set_property(TARGET course_schedule PROPERTY CXX_STANDARD 17)
+add_test(course_schedule happy_number)
+
 add_subdirectory(thirdparty)
