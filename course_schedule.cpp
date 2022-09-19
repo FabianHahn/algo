@@ -68,7 +68,7 @@ int scheduleCourse(std::vector<std::vector<int>>& courses) {
   return computeMaxCourses(1, 0);
 }
 
-int scheduleCourseForward(std::vector<std::vector<int>>& courses) {
+int scheduleCourseCull(std::vector<std::vector<int>>& courses) {
   int n = courses.size();
   if (courses.empty()) {
     return 0;
@@ -92,8 +92,8 @@ int scheduleCourseForward(std::vector<std::vector<int>>& courses) {
   }
 
   std::vector<int> computeMaxCoursesDp((lastDay + 1) * n, -1);
-  std::function<int(int, int)> computeMaxCourses;
-  computeMaxCourses = [&](int day, int nextCourse) {
+  std::function<int(int, int, int&, int)> computeMaxCourses;
+  computeMaxCourses = [&](int day, int nextCourse, int& score, int bestScore) {
     if (day > lastDay) {
       return 0;
     }
@@ -107,28 +107,43 @@ int scheduleCourseForward(std::vector<std::vector<int>>& courses) {
       return result;
     }
 
+    int picksLeft = n - nextCourse;
+    if (score + picksLeft <= bestScore) {
+      return 0;
+    }
+
     const auto& course = courses[nextCourse];
     int duration = course[0];
     int lastDay = course[1];
     int lastStartDay = lastDay - duration + 1;
 
-    int skip = computeMaxCourses(day, nextCourse + 1);
     if (day > lastStartDay) {
       // too late, we have to skip this course
-      result = skip;
+      result = computeMaxCourses(day, nextCourse + 1, score, bestScore);
       return result;
     }
 
-    int take = computeMaxCourses(day + duration, nextCourse + 1) + 1;
+    score += 1;
+    int take =
+        computeMaxCourses(day + duration, nextCourse + 1, score, std::max(score, bestScore)) + 1;
+    if (score + take > bestScore) {
+      bestScore = take;
+    }
+    score -= 1;
+
+    int skip = computeMaxCourses(day, nextCourse + 1, score, bestScore);
+
     result = std::max(skip, take);
     return result;
   };
 
-  return computeMaxCourses(1, 0);
+  int score = 0;
+  return computeMaxCourses(1, 0, score, 0);
 }
 
-
-int scheduleCourseTest(std::vector<std::vector<int>> courses) { return scheduleCourse(courses); }
+int scheduleCourseTest(std::vector<std::vector<int>> courses) {
+  return scheduleCourseCull(courses);
+}
 
 int scheduleCourseTestString(std::string input) {
   std::vector<std::vector<int>> courses;
