@@ -233,8 +233,59 @@ int scheduleCourseForward(std::vector<std::vector<int>>& courses) {
   return bestNumPicks;
 }
 
+int scheduleCourseForwardHeap(std::vector<std::vector<int>>& courses) {
+  int n = courses.size();
+  if (courses.empty()) {
+    return 0;
+  }
+
+  std::sort(courses.begin(), courses.end(), [](const auto& a, const auto& b) {
+    int lastDayA = a[1];
+    int lastDayB = b[1];
+    return lastDayA < lastDayB;
+  });
+
+  int lastDay = 0;
+  for (const auto& course : courses) {
+    if (course[1] > lastDay) {
+      lastDay = course[1];
+    }
+  }
+
+  if (lastDay < 1) {
+    return 0;
+  }
+
+  std::vector<int> pickedCourses;
+  int currentLastDay = 1;
+  for (const auto& course : courses) {
+    int duration = course[0];
+    int lastEndDay = course[1];
+    int lastStartDay = lastEndDay - duration + 1;
+
+    if (currentLastDay <= lastStartDay) {
+      currentLastDay += duration;
+      pickedCourses.emplace_back(duration);
+      std::push_heap(pickedCourses.begin(), pickedCourses.end());
+      continue;
+    }
+
+    if (!pickedCourses.empty() && pickedCourses[0] > duration) {
+      currentLastDay -= pickedCourses[0];
+      std::pop_heap(pickedCourses.begin(), pickedCourses.end());
+      pickedCourses.pop_back();
+
+      pickedCourses.push_back(duration);
+      std::push_heap(pickedCourses.begin(), pickedCourses.end());
+      currentLastDay += duration;
+    }
+  }
+
+  return pickedCourses.size();
+}
+
 int scheduleCourseTest(std::vector<std::vector<int>> courses) {
-  return scheduleCourseForward(courses);
+  return scheduleCourseForwardHeap(courses);
 }
 
 int scheduleCourseTestString(std::string input) {
