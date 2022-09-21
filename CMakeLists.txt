@@ -244,4 +244,10 @@ target_link_libraries(first_missing_positive GTest::gtest GTest::gmock)
 set_property(TARGET first_missing_positive PROPERTY CXX_STANDARD 17)
 add_test(first_missing_positive first_missing_positive)
 
+add_executable(serialize_binary_tree "serialize_binary_tree.cpp")
+target_compile_definitions(serialize_binary_tree PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(serialize_binary_tree GTest::gtest GTest::gmock)
+set_property(TARGET serialize_binary_tree PROPERTY CXX_STANDARD 17)
+add_test(serialize_binary_tree serialize_binary_tree)
+
 add_subdirectory(thirdparty)
