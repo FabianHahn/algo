@@ -238,4 +238,10 @@ target_link_libraries(course_schedule GTest::gtest GTest::gmock)
 set_property(TARGET course_schedule PROPERTY CXX_STANDARD 17)
 add_test(course_schedule happy_number)
 
+add_executable(first_missing_positive "first_missing_positive.cpp")
+target_compile_definitions(first_missing_positive PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(first_missing_positive GTest::gtest GTest::gmock)
+set_property(TARGET first_missing_positive PROPERTY CXX_STANDARD 17)
+add_test(first_missing_positive first_missing_positive)
+
 add_subdirectory(thirdparty)
