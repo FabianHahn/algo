@@ -250,4 +250,10 @@ target_link_libraries(serialize_binary_tree GTest::gtest GTest::gmock)
 set_property(TARGET serialize_binary_tree PROPERTY CXX_STANDARD 17)
 add_test(serialize_binary_tree serialize_binary_tree)
 
+add_executable(binary_concat "binary_concat.cpp")
+target_compile_definitions(binary_concat PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(binary_concat GTest::gtest GTest::gmock)
+set_property(TARGET binary_concat PROPERTY CXX_STANDARD 17)
+add_test(binary_concat binary_concat)
+
 add_subdirectory(thirdparty)
