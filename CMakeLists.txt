@@ -262,4 +262,10 @@ target_link_libraries(equality_satisfiability GTest::gtest GTest::gmock)
 set_property(TARGET equality_satisfiability PROPERTY CXX_STANDARD 17)
 add_test(equality_satisfiability equality_satisfiability)
 
+add_executable(min_eating_speed "min_eating_speed.cpp")
+target_compile_definitions(min_eating_speed PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(min_eating_speed GTest::gtest GTest::gmock)
+set_property(TARGET min_eating_speed PROPERTY CXX_STANDARD 17)
+add_test(min_eating_speed min_eating_speed)
+
 add_subdirectory(thirdparty)
