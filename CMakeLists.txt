@@ -256,4 +256,10 @@ target_link_libraries(binary_concat GTest::gtest GTest::gmock)
 set_property(TARGET binary_concat PROPERTY CXX_STANDARD 17)
 add_test(binary_concat binary_concat)
 
+add_executable(equality_satisfiability "equality_satisfiability.cpp")
+target_compile_definitions(equality_satisfiability PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(equality_satisfiability GTest::gtest GTest::gmock)
+set_property(TARGET equality_satisfiability PROPERTY CXX_STANDARD 17)
+add_test(equality_satisfiability equality_satisfiability)
+
 add_subdirectory(thirdparty)
