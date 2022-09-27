@@ -274,4 +274,10 @@ target_link_libraries(dominoes GTest::gtest GTest::gmock)
 set_property(TARGET dominoes PROPERTY CXX_STANDARD 17)
 add_test(dominoes dominoes)
 
+add_executable(cat_mouse "cat_mouse.cpp")
+target_compile_definitions(cat_mouse PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(cat_mouse GTest::gtest GTest::gmock)
+set_property(TARGET cat_mouse PROPERTY CXX_STANDARD 17)
+add_test(cat_mouse cat_mouse)
+
 add_subdirectory(thirdparty)
