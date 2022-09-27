@@ -268,4 +268,10 @@ target_link_libraries(min_eating_speed GTest::gtest GTest::gmock)
 set_property(TARGET min_eating_speed PROPERTY CXX_STANDARD 17)
 add_test(min_eating_speed min_eating_speed)
 
+add_executable(dominoes "dominoes.cpp")
+target_compile_definitions(dominoes PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(dominoes GTest::gtest GTest::gmock)
+set_property(TARGET dominoes PROPERTY CXX_STANDARD 17)
+add_test(dominoes dominoes)
+
 add_subdirectory(thirdparty)
