@@ -280,4 +280,10 @@ target_link_libraries(cat_mouse GTest::gtest GTest::gmock)
 set_property(TARGET cat_mouse PROPERTY CXX_STANDARD 17)
 add_test(cat_mouse cat_mouse)
 
+add_executable(trapping_rain_water "trapping_rain_water.cpp")
+target_compile_definitions(trapping_rain_water PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(trapping_rain_water GTest::gtest GTest::gmock)
+set_property(TARGET trapping_rain_water PROPERTY CXX_STANDARD 17)
+add_test(trapping_rain_water trapping_rain_water)
+
 add_subdirectory(thirdparty)
