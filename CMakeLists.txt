@@ -286,4 +286,10 @@ target_link_libraries(trapping_rain_water GTest::gtest GTest::gmock)
 set_property(TARGET trapping_rain_water PROPERTY CXX_STANDARD 17)
 add_test(trapping_rain_water trapping_rain_water)
 
+add_executable(producer_consumer "producer_consumer.cpp")
+target_compile_definitions(producer_consumer PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(producer_consumer GTest::gtest GTest::gmock)
+set_property(TARGET producer_consumer PROPERTY CXX_STANDARD 17)
+add_test(producer_consumer producer_consumer)
+
 add_subdirectory(thirdparty)
