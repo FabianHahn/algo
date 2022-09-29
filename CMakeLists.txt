@@ -292,4 +292,10 @@ target_link_libraries(producer_consumer GTest::gtest GTest::gmock)
 set_property(TARGET producer_consumer PROPERTY CXX_STANDARD 17)
 add_test(producer_consumer producer_consumer)
 
+add_executable(find_k_closest "find_k_closest.cpp")
+target_compile_definitions(find_k_closest PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(find_k_closest GTest::gtest GTest::gmock)
+set_property(TARGET find_k_closest PROPERTY CXX_STANDARD 17)
+add_test(find_k_closest find_k_closest)
+
 add_subdirectory(thirdparty)
