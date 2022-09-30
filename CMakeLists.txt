@@ -298,4 +298,10 @@ target_link_libraries(find_k_closest GTest::gtest GTest::gmock)
 set_property(TARGET find_k_closest PROPERTY CXX_STANDARD 17)
 add_test(find_k_closest find_k_closest)
 
+add_executable(skyline "skyline.cpp")
+target_compile_definitions(skyline PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(skyline GTest::gtest GTest::gmock)
+set_property(TARGET skyline PROPERTY CXX_STANDARD 17)
+add_test(skyline skyline)
+
 add_subdirectory(thirdparty)
