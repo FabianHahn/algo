@@ -304,4 +304,10 @@ target_link_libraries(skyline GTest::gtest GTest::gmock)
 set_property(TARGET skyline PROPERTY CXX_STANDARD 17)
 add_test(skyline skyline)
 
+add_executable(colorful_balloons "colorful_balloons.cpp")
+target_compile_definitions(colorful_balloons PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(colorful_balloons GTest::gtest GTest::gmock)
+set_property(TARGET colorful_balloons PROPERTY CXX_STANDARD 17)
+add_test(colorful_balloons colorful_balloons)
+
 add_subdirectory(thirdparty)
