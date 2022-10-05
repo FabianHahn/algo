@@ -310,4 +310,10 @@ target_link_libraries(colorful_balloons GTest::gtest GTest::gmock)
 set_property(TARGET colorful_balloons PROPERTY CXX_STANDARD 17)
 add_test(colorful_balloons colorful_balloons)
 
+add_executable(path_sum "path_sum.cpp")
+target_compile_definitions(path_sum PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(path_sum GTest::gtest GTest::gmock)
+set_property(TARGET path_sum PROPERTY CXX_STANDARD 17)
+add_test(path_sum path_sum)
+
 add_subdirectory(thirdparty)
