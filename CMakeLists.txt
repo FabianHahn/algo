@@ -316,4 +316,10 @@ target_link_libraries(path_sum GTest::gtest GTest::gmock)
 set_property(TARGET path_sum PROPERTY CXX_STANDARD 17)
 add_test(path_sum path_sum)
 
+add_executable(semaphore "semaphore.cpp")
+target_compile_definitions(semaphore PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(semaphore GTest::gtest GTest::gmock)
+set_property(TARGET semaphore PROPERTY CXX_STANDARD 17)
+add_test(semaphore semaphore)
+
 add_subdirectory(thirdparty)
