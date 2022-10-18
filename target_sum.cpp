@@ -68,6 +68,38 @@ TEST(TargetSum, test) {
   EXPECT_EQ(findTargetSumWaysTest(std::vector<int>{1, 2, 3, 1}, 3), 2);
 }
 
+int findTargetSumWaysIncremental(std::vector<int>& nums, int target) {
+  int n = nums.size();
+
+  std::unordered_map<int, int> numCombinations;
+  std::unordered_map<int, int> newNumCombinations;
+  numCombinations[0] = 1;
+
+  for (int i = 0; i < n; i++) {
+    int num = nums[i];
+
+    newNumCombinations.clear();
+    for (auto [sum, count] : numCombinations) {
+      newNumCombinations[sum + num] += count;
+      newNumCombinations[sum - num] += count;
+    }
+
+    std::swap(numCombinations, newNumCombinations);
+  }
+
+  return numCombinations[target];
+}
+
+int findTargetSumWaysIncrementalTest(std::vector<int> nums, int target) {
+  return findTargetSumWaysIncremental(nums, target);
+}
+
+TEST(TargetSum, testIncremental) {
+  EXPECT_EQ(findTargetSumWaysIncrementalTest(std::vector<int>{1, 2, 3, 1}, 3), 2);
+  EXPECT_EQ(findTargetSumWaysIncrementalTest(std::vector<int>{1, 1, 1, 1, 1}, 3), 5);
+  EXPECT_EQ(findTargetSumWaysIncrementalTest(std::vector<int>{1}, 1), 1);
+}
+
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
