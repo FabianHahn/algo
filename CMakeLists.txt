@@ -334,4 +334,10 @@ target_link_libraries(cheapest_flight GTest::gtest GTest::gmock)
 set_property(TARGET cheapest_flight PROPERTY CXX_STANDARD 17)
 add_test(cheapest_flight cheapest_flight)
 
+add_executable(decode_ways "decode_ways.cpp")
+target_compile_definitions(decode_ways PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(decode_ways GTest::gtest GTest::gmock)
+set_property(TARGET decode_ways PROPERTY CXX_STANDARD 17)
+add_test(decode_ways decode_ways)
+
 add_subdirectory(thirdparty)
