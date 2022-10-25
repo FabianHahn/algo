@@ -340,4 +340,10 @@ target_link_libraries(decode_ways GTest::gtest GTest::gmock)
 set_property(TARGET decode_ways PROPERTY CXX_STANDARD 17)
 add_test(decode_ways decode_ways)
 
+add_executable(first_bad_version "first_bad_version.cpp")
+target_compile_definitions(first_bad_version PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(first_bad_version GTest::gtest GTest::gmock)
+set_property(TARGET first_bad_version PROPERTY CXX_STANDARD 17)
+add_test(first_bad_version first_bad_version)
+
 add_subdirectory(thirdparty)
