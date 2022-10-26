@@ -346,4 +346,10 @@ target_link_libraries(first_bad_version GTest::gtest GTest::gmock)
 set_property(TARGET first_bad_version PROPERTY CXX_STANDARD 17)
 add_test(first_bad_version first_bad_version)
 
+add_executable(continuous_subarray_sum "continuous_subarray_sum.cpp")
+target_compile_definitions(continuous_subarray_sum PUBLIC BUILD_AND_RUN_TESTS)
+target_link_libraries(continuous_subarray_sum GTest::gtest GTest::gmock)
+set_property(TARGET continuous_subarray_sum PROPERTY CXX_STANDARD 17)
+add_test(continuous_subarray_sum continuous_subarray_sum)
+
 add_subdirectory(thirdparty)
